@@ -1,3 +1,4 @@
+import 'package:analyseur/screens/activities/widgets/body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:analyseur/helpers/sizes.dart';
@@ -15,15 +16,12 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     SizeConfig().init(context);
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Center(
-        child: Text('Welcome to Analyseur')
-      )
+      body: Body()
     );
   }
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      title: Text('Activities'),
       leading: IconButton(
         icon: SvgPicture.asset(
           'assets/icons/settings.svg',
