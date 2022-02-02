@@ -9,45 +9,10 @@ class Body extends StatelessWidget {
         width: double.infinity,
         child: Column(
           children: [
-            Location(),
-            DigitalClock(),
             DateFormatted(),
-            BuildDivider()
+            DigitalClock()
           ],
         ));
-  }
-}
-
-class BuildDivider extends StatelessWidget {
-  const BuildDivider({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(18),
-      child: Divider(
-        color: Theme.of(context).accentColor,
-    ),
-    );
-  }
-}
-
-class Location extends StatelessWidget {
-  const Location({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(Icons.location_on, size: 16,),
-        Text('León', style: Theme.of(context).textTheme.bodyText2),
-      ],
-    );
   }
 }
 
@@ -75,7 +40,7 @@ class DigitalClockState extends State<DigitalClock> {
 
   @override
   Widget build(BuildContext context) {
-    // String _period = _timeOfDay.period == DayPeriod.am ? 'AM' : 'PM';
+    String _period = _timeOfDay.period == DayPeriod.am ? 'AM' : 'PM';
     return Column(
       children: [
         Row(
@@ -83,17 +48,17 @@ class DigitalClockState extends State<DigitalClock> {
           children: [
             // _timeOfDay.hour returns hours in 24h format in opposition to hourOfPeriod
             Text(
-              '${_timeOfDay.hour}:${_timeOfDay.minute}',
+              '${_timeOfDay.hourOfPeriod}:${_timeOfDay.minute}',
               style: Theme.of(context).textTheme.headline1
             ),
-            // SizedBox(width: 5),
-            // RotatedBox(
-            //   quarterTurns: 3,
-            //   child: Text(
-            //     _period,
-            //     style: TextStyle(fontSize: getProportionateScreenWidth(18)),
-            //   ),
-            // )
+            SizedBox(width: 5),
+            RotatedBox(
+              quarterTurns: 3,
+              child: Text(
+                _period,
+                style: TextStyle(fontSize: getProportionateScreenWidth(18)),
+              ),
+            )
           ],
         )
       ],
@@ -108,27 +73,27 @@ class DateFormatted extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime currentDate = DateTime.now();
     List<String> _days = [
-      'Mon',
-      'Tue',
-      'Wed',
-      'Thu',
-      'Fri',
-      'Sat',
-      'Sun'
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
     ];
     List<String> _months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
+      'Jannuary',
+      'February',
+      'March',
+      'April',
       'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
     ];
     int _currentWeekDay = currentDate.weekday - 1;
     int _currentMonthIndex = currentDate.month - 1;
