@@ -52,7 +52,7 @@ class DigitalClockState extends State<DigitalClock> {
             // _timeOfDay.hour returns hours in 24h format in opposition to hourOfPeriod
             Text(
               '${_timeOfDay.hourOfPeriod}:${_timeOfDay.minute}',
-              style: Theme.of(context).textTheme.headline1
+              style: Theme.of(context).textTheme.headline1,
             ),
             SizedBox(width: 5),
             RotatedBox(

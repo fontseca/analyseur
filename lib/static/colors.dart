@@ -8,12 +8,12 @@ const kAccentDarkColor        = Color(0xFF4E4E4E);
 const kBackgroundDarkColor    = Color(0xFF3A3A3A);
 const kSurfaceDarkColor       = Color(0xFF222225);
 
-const kAccentIconLightColor   = Color(0xFFECEFF5);
+const kAccentIconLightColor   = Color(0xFF242A38);
 const kAccentIconDarkColor    = Color(0xFF303030);
 const kPrimaryIconLightColor  = Color(0xFFECEFF5);
 const kPrimaryIconDarkColor   = Color(0xFF232323);
 
-const kBodyTextColorLight     = Color(0xFFA1B0CA);
+const kBodyTextColorLight     = Color(0xFF242A38);
 const kBodyTextColorDark      = Color(0xFF7C7C7C);
 const kTitleTextLightColor    = Color(0xFF101112);
 const kTitleTextDarkColor     = Colors.white;
