@@ -34,9 +34,12 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
       ),
       actions: [
         IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.notifications,
-                color: Theme.of(context).accentIconTheme.color))
+          onPressed: () {},
+          icon: Icon(
+            Icons.notifications,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
       ],
     );
   }
