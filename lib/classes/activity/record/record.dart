@@ -2,7 +2,7 @@ import 'package:analyseur/classes/activity/recordlog/recordlog.dart';
 
 class Record {
   late String id;
-  late double totalDuration;
+  late double totalDuration = 0;
   late List<RecordLog> recordLogs = [];
   RecordLog rl = new RecordLog();
   String activity;
