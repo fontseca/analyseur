@@ -71,6 +71,11 @@ class ActivityList extends StatelessWidget {
         Activity(activityName: 'Walking', activityColor: Color(0xFFFEE2E2)),
         Activity(activityName: 'Resting', activityColor: Color(0xFFCCFBF1)),
         Activity(activityName: 'Studying', activityColor: Color(0xFFE0E7FF)),
+        Activity(activityName: 'Writing', activityColor: Color(0xFFEEF2FF)),
+        Activity(activityName: 'Watching TV', activityColor: Color(0xFFF0FDF4)),
+        Activity(activityName: 'Cooking', activityColor: Color(0xFFFEE2E2)),
+        Activity(activityName: 'Sleeping', activityColor: Color(0xFFCCFBF1)),
+        Activity(activityName: 'At the U', activityColor: Color(0xFFE0E7FF)),
       ],
     );
   }

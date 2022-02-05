@@ -6,10 +6,12 @@ class Record {
   late List<RecordLog> recordLogs = [];
   RecordLog rl = new RecordLog();
   String activity;
+  late DateTime date;
 
   Record(this.activity);
 
   void startLog() {
+    date = DateTime.now();
     rl = new RecordLog();
     rl.start();
   }

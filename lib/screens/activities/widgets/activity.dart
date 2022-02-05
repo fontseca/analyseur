@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class Activity extends StatelessWidget {
   final String activityName;
   final Color activityColor;
-  late String desc;
+  late String desc = '';
   late double total;
   late List<Record> activityRecords = [];
   late Record record;
