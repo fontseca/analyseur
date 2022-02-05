@@ -17,7 +17,7 @@ class RecordLog {
 
   double duration() {
     double duration = _end - _start;
-    duration /= 1000;
+    duration /= 3600000;
     return duration;
   }
 }
