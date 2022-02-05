@@ -1,5 +1,6 @@
 import 'package:analyseur/classes/activity/record/record.dart';
 import 'package:analyseur/helpers/sizes.dart';
+import 'package:analyseur/screens/activity.dashboard/activity.dashboard.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -59,7 +60,7 @@ class Activity extends StatelessWidget {
       print('Total duration of \'${record.id}\': ${record.totalDuration}');
       print('Logs of \'${record.id}\'');
       record.recordLogs.forEach((rl) {
-        print('\t ${rl.duration()} seconds');
+        print('\t ${rl.duration()} hours');
       });
     });
   }
@@ -80,14 +81,18 @@ class Activity extends StatelessWidget {
               offset: Offset(0, 2),
             ),
           ],
-          border: Border.all(color: Color(0xFF242A38).withOpacity(0.10), width: 1),
+          border:
+              Border.all(color: Color(0xFF242A38).withOpacity(0.10), width: 1),
           // color: Theme.of(context).backgroundColor,
           gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               tileMode: TileMode.repeated,
-                colors: [Theme.of(context).backgroundColor, Theme.of(context).backgroundColor, this.activityColor.withOpacity(0.1)]
-            ),
+              colors: [
+                Theme.of(context).backgroundColor,
+                Theme.of(context).backgroundColor,
+                this.activityColor.withOpacity(0.1)
+              ]),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -175,7 +180,9 @@ class _ActionsState extends State<Actions> {
           shape: CircleBorder(),
           child: Icon(
             _isPlaying ? Icons.stop : Icons.play_arrow,
-            color: _isPlaying ? widget.self.activityColor : Theme.of(context).accentIconTheme.color,
+            color: _isPlaying
+                ? widget.self.activityColor
+                : Theme.of(context).accentIconTheme.color,
           ),
           onPressed: () {
             if (!_isPlaying) {
@@ -200,10 +207,12 @@ class _ActionsState extends State<Actions> {
             size: 35,
           ),
           onPressed: () {
-            // self.startActivity();
-            print('Show dashboard');
-            // self.printactivityRecords();
-            // widget.self.finishAcitivity();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) {
+                return ActivityDashboard(widget.self);
+              }),
+            );
           },
         ),
       ],
