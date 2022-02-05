@@ -12,7 +12,7 @@ class _ActivitiesState extends State<Activities> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
         boxShadow: [BoxShadow(
@@ -21,7 +21,7 @@ class _ActivitiesState extends State<Activities> {
           color: Colors.black.withOpacity(0.10),
           offset: Offset(0, -4),
         )],
-        color: Colors.white,
+        color: Theme.of(context).accentColor,
       ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -33,14 +33,22 @@ class _ActivitiesState extends State<Activities> {
                 Text('Activities', style: TextStyle(fontSize: 24),),
                 Row(
                   children: [
-                    IconButton(
+                    MaterialButton(
+                      minWidth: 10,
+                      height: 40,
+                      visualDensity: VisualDensity.compact,
+                      shape: CircleBorder(),
+                      child: Icon(Icons.filter_alt),
                       onPressed: () {},
-                      icon: Icon(Icons.filter),
                     ),
-                    IconButton(
+                    MaterialButton(
+                      minWidth: 10,
+                      height: 40,
+                      visualDensity: VisualDensity.compact,
+                      shape: CircleBorder(),
+                      child: Icon(Icons.add),
                       onPressed: () {},
-                      icon: Icon(Icons.add),
-                    )
+                    ),
                   ],
                 )
               ],
@@ -57,7 +65,7 @@ class ActivityList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children:<Activity> [
         Activity(activityName: 'Coding', activityColor: Color(0xFFEEF2FF)),
         Activity(activityName: 'Reading', activityColor: Color(0xFFF0FDF4)),
         Activity(activityName: 'Walking', activityColor: Color(0xFFFEE2E2)),
