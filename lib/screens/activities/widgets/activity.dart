@@ -80,9 +80,14 @@ class Activity extends StatelessWidget {
               offset: Offset(0, 2),
             ),
           ],
-          border:
-              Border.all(color: Color(0xFF242A38).withOpacity(0.10), width: 1),
-          color: Theme.of(context).backgroundColor,
+          border: Border.all(color: Color(0xFF242A38).withOpacity(0.10), width: 1),
+          // color: Theme.of(context).backgroundColor,
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              tileMode: TileMode.repeated,
+                colors: [Theme.of(context).backgroundColor, Theme.of(context).backgroundColor, this.activityColor.withOpacity(0.1)]
+            ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
