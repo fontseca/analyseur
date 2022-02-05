@@ -5,7 +5,7 @@ const kSecondaryLightColor    = Color(0xFFE4E9F2);
 const kSecondaryDarkColor     = Color(0xFF404040);
 const kAccentLightColor       = Color(0xFFFFFFFF);
 const kAccentDarkColor        = Color(0xFF151515);
-const kBackgroundDarkColor    = Color(0xFF3A3A3A);
+const kBackgroundDarkColor    = Color(0xFF212121);
 const kSurfaceDarkColor       = Color(0xFF222225);
 
 const kAccentIconLightColor   = Color(0xFFFFFFFF);
