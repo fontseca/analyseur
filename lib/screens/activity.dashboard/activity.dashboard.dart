@@ -4,6 +4,7 @@ import 'package:analyseur/helpers/sizes.dart';
 import 'package:analyseur/screens/activities/widgets/activity.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:intl/intl.dart';
 
 class ActivityDashboard extends StatefulWidget {
   final Activity act;
@@ -15,42 +16,50 @@ class ActivityDashboard extends StatefulWidget {
 }
 
 class _ActivityDashboardState extends State<ActivityDashboard> {
+  List<RecordItem> recordsList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    widget.act.activityRecords.forEach((record) {
+      recordsList.add(RecordItem(record));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Activity dashboard'),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ActivityInformation(widget.act),
-          ActivityChart(widget.act),
-          // Records
-          Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(10)),
-            child: Text(
-              'Records',
-              style: TextStyle(
-                fontSize: 20,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ActivityInformation(widget.act),
+            ActivityChart(widget.act),
+            // Records
+            Container(
+              padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+              child: Text(
+                'Records',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
             ),
-          ),
-          Container(
-            width: double.infinity,
-            height: getProportionateScreenHeight(100),
-            child: RecordsList(widget.act.activityRecords),
-          ),
-        ],
+            ...recordsList,
+          ],
+        ),
       ),
     );
   }
 }
 
-class RecordsList extends StatelessWidget {
-  final List<Record> activityRecords;
+class RecordItem extends StatelessWidget {
+  final Record record;
 
-  RecordsList(this.activityRecords);
+  RecordItem(this.record);
 
   @override
   Widget build(BuildContext context) {
@@ -71,39 +80,63 @@ class RecordsList extends StatelessWidget {
       'December'
     ];
 
-    return ListView.builder(
-      itemCount: this.activityRecords.length,
-      itemBuilder: (BuildContext context, int index) {
-        String recordDate =
-            '${days[this.activityRecords[index].date.weekday - 1]} ${this.activityRecords[index].date.day}, ${months[this.activityRecords[index].date.month - 1]}';
-        double h = this.activityRecords[index].totalDuration;
-        double m = this.activityRecords[index].totalDuration * 60;
-        double s = m * 60;
+    String recordDate =
+        '${days[this.record.date.weekday - 1]} ${this.record.date.day}, ${months[this.record.date.month - 1]}';
+    double h = this.record.totalDuration;
+    double m = this.record.totalDuration * 60;
+    double s = m * 60;
 
-        h = h.roundToDouble();
-        m = m.roundToDouble();
-        s = s.roundToDouble();
+    h = h.roundToDouble();
+    m = m.roundToDouble();
+    s = s.roundToDouble();
 
-        String durationFormatted = '$h h $m m $s s';
+    String durationFormatted = '$h h $m m $s s';
 
-        return Container(
-          child: ListTile(
-            title: Text(
-              recordDate,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+    return Container(
+      padding: EdgeInsets.all(getProportionateScreenWidth(3)),
+      margin: EdgeInsets.fromLTRB(5, 5, 5, 0),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Theme.of(context).accentColor,
+      ),
+      height: getProportionateScreenHeight(60),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Date
+          Text(recordDate, style: TextStyle(fontWeight: FontWeight.bold)),
+          // Actions
+          Container(
+            child: Row(
+              children: [
+                // Duration
+                Text(durationFormatted),
+                // Button
+                MaterialButton(
+                  minWidth: 40,
+                  height: 40,
+                  shape: CircleBorder(),
+                  visualDensity: VisualDensity.compact,
+                  child: Icon(
+                    Icons.chevron_right,
+                    color: Theme.of(context).iconTheme.color,
+                    // size: 35,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return RecordLogs(this.record.recordLogs, 'Test');
+                      }),
+                    );
+                  },
+                ),
+              ],
             ),
-            trailing: Text(durationFormatted),
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return RecordLogs(this.activityRecords[index].recordLogs,
-                    'this.act.activityName');
-              }));
-            },
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }
@@ -120,16 +153,9 @@ class _ActivityInformationState extends State<ActivityInformation> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(getProportionateScreenWidth(16)),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.white,
-            widget.act.activityColor,
-          ],
-        ),
-      ),
+      padding: EdgeInsets.all(getProportionateScreenWidth(10)),
       width: double.infinity,
+      height: getProportionateScreenHeight(200),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -163,7 +189,7 @@ class _ActivityInformationState extends State<ActivityInformation> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.all(getProportionateScreenWidth(16)),
+            padding: EdgeInsets.all(getProportionateScreenWidth(6)),
             child: Text(
               widget.act.desc.isEmpty
                   ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
@@ -221,35 +247,82 @@ class ActivityChart extends StatefulWidget {
 class _ActivityChartState extends State<ActivityChart> {
   @override
   Widget build(BuildContext context) {
-    final List<SalesData> chartData = [
-      SalesData(DateTime(2010), 35),
-      SalesData(DateTime(2011), 28),
-      SalesData(DateTime(2012), 34),
-      SalesData(DateTime(2013), 32),
-      SalesData(DateTime(2014), 40)
-    ];
+    final List<WeekRecordPoint> weekData = [];
+
+    @override
+    void initState() {
+      widget.self.activityRecords.forEach((record) {
+        DateTime rd = record.date;
+        DateTime dateRecordToPoint = DateTime(rd.year, rd.month, rd.day, 0, 0, 0);
+        weekData.add(WeekRecordPoint(dateRecordToPoint, record.totalDuration));
+      });
+    }
 
     return Container(
+      width: double.infinity,
+      height: getProportionateScreenWidth(250),
       child: SfCartesianChart(
-        primaryXAxis: DateTimeAxis(),
-        series: <ChartSeries>[
-          // Renders line chart
-          LineSeries<SalesData, DateTime>(
-            dataSource: chartData,
-            xValueMapper: (SalesData sales, _) => sales.year,
-            yValueMapper: (SalesData sales, _) => sales.sales,
-            color: Theme.of(context).primaryColor,
-            width: 1,
+        
+        // Duration
+        primaryYAxis: NumericAxis(
+          axisLine: AxisLine(
+            width: 0,
           ),
+          labelStyle: TextStyle(fontSize: 10),
+          minimum: 0,
+          maximum: 12,
+          interval: 2,
+          labelFormat: '{value}h',
+          // title: AxisTitle(text: 'Duration (hrs)'),
+        ),
+
+        // Date
+        primaryXAxis: DateTimeAxis(
+          majorGridLines: MajorGridLines(
+            width: 0,
+          ),
+          minimum: DateTime(2022, 2, (DateTime.now().day - 6)),
+          maximum: DateTime.now(),
+          interval: 1,
+          // title: AxisTitle(text: 'Last week'),
+          dateFormat: DateFormat('EEE').add_d(),
+          labelRotation: -10,
+          labelAlignment: LabelAlignment.center,
+          labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 9),
+          axisLine: AxisLine(
+            width: 0,
+          ),
+        ),
+
+        // Plot
+        series: <ChartSeries>[
+          LineSeries<WeekRecordPoint, DateTime>(
+              dataSource: weekData,
+              xValueMapper: (WeekRecordPoint record, _) => record.weekday,
+              yValueMapper: (WeekRecordPoint record, _) => record.duration,
+              color: Theme.of(context).primaryColor,
+              width: 1,
+              markerSettings: MarkerSettings(
+                isVisible: true,
+                height: 4,
+                width: 4,
+                shape: DataMarkerType.circle,
+                borderWidth: 3,
+                borderColor: Colors.black,
+              ),
+              enableTooltip: true,
+              
+              onRendererCreated: (ChartSeriesController controller) {
+                initState();
+              }),
         ],
       ),
     );
   }
 }
 
-class SalesData {
-  final DateTime year;
-  final double sales;
-
-  SalesData(this.year, this.sales);
+class WeekRecordPoint {
+  final DateTime weekday;
+  final double duration;
+  WeekRecordPoint(this.weekday, this.duration);
 }
