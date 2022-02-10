@@ -64,7 +64,6 @@ class RecordItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
     List<String> months = [
       'January',
       'February',
@@ -79,18 +78,24 @@ class RecordItem extends StatelessWidget {
       'November',
       'December'
     ];
+    String dayWeek = days[this.record.date.weekday - 1];
+    String month = months[this.record.date.month - 1];
+    String day = this.record.date.day.toString();
+    String recordDate = '$dayWeek $day, $month';
+    double temp = this.record.totalDuration;
+    double h = 0.0;
+    double m = 0.0;
+    double s = 0.0;
 
-    String recordDate =
-        '${days[this.record.date.weekday - 1]} ${this.record.date.day}, ${months[this.record.date.month - 1]}';
-    double h = this.record.totalDuration;
-    double m = this.record.totalDuration * 60;
-    double s = m * 60;
+    h = temp - (temp % 1);
 
-    h = h.roundToDouble();
-    m = m.roundToDouble();
-    s = s.roundToDouble();
+    temp = (temp % 1) * 60;
+    m = temp - (m % 1);
 
-    String durationFormatted = '$h h $m m $s s';
+    temp = (temp % 1) * 60;
+    s = temp - (s % 1);
+
+    String durationFormatted = '${h.toInt()}h ${m.toInt()}m ${s.toInt()}s';
 
     return Container(
       padding: EdgeInsets.all(getProportionateScreenWidth(3)),
@@ -253,7 +258,8 @@ class _ActivityChartState extends State<ActivityChart> {
     void initState() {
       widget.self.activityRecords.forEach((record) {
         DateTime rd = record.date;
-        DateTime dateRecordToPoint = DateTime(rd.year, rd.month, rd.day, 0, 0, 0);
+        DateTime dateRecordToPoint =
+            DateTime(rd.year, rd.month, rd.day, 0, 0, 0);
         weekData.add(WeekRecordPoint(dateRecordToPoint, record.totalDuration));
       });
     }
@@ -262,7 +268,6 @@ class _ActivityChartState extends State<ActivityChart> {
       width: double.infinity,
       height: getProportionateScreenWidth(250),
       child: SfCartesianChart(
-        
         // Duration
         primaryYAxis: NumericAxis(
           axisLine: AxisLine(
@@ -311,7 +316,6 @@ class _ActivityChartState extends State<ActivityChart> {
                 borderColor: Colors.black,
               ),
               enableTooltip: true,
-              
               onRendererCreated: (ChartSeriesController controller) {
                 initState();
               }),
