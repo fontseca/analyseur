@@ -1,4 +1,5 @@
 import 'package:analyseur/screens/activities/widgets/activity.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Activities extends StatefulWidget {
@@ -9,20 +10,39 @@ class Activities extends StatefulWidget {
 }
 
 class _ActivitiesState extends State<Activities> {
+  late List<Activity> activitiesToRender = [];
+  // this data will come from the server
+  List actData = [
+    ['Coding', Color(0xFFEEF2FF)],
+    ['Reading', Color(0xFFF0FDF4)],
+    ['Walking', Color(0xFFFEE2E2)],
+    ['Resting', Color(0xFFCCFBF1)],
+    ['Studying', Color(0xFFE0E7FF)],
+    ['Writing', Color(0xFFEEF2FF)],
+    ['Watching TV', Color(0xFFF0FDF4)],
+    ['Cooking', Color(0xFFFEE2E2)],
+    ['Sleeping', Color(0xFFCCFBF1)],
+    ['At the U', Color(0xFFE0E7FF)]
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    int numberOfActivities = actData.length;
+    int i;
+
+    for (i = 0; i < numberOfActivities; ++i) {
+      activitiesToRender.add(Activity(
+        activityName: actData[i][0],
+        activityColor: actData[i][1],
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25)),
-        boxShadow: [BoxShadow(
-          blurRadius: 4,
-          spreadRadius: 0,
-          color: Colors.black.withOpacity(0.10),
-          offset: Offset(0, -4),
-        )],
-        color: Theme.of(context).accentColor,
-      ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -30,7 +50,10 @@ class _ActivitiesState extends State<Activities> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Activities', style: TextStyle(fontSize: 24),),
+                Text(
+                  'Activities',
+                  style: TextStyle(fontSize: 24),
+                ),
                 Row(
                   children: [
                     MaterialButton(
@@ -53,30 +76,10 @@ class _ActivitiesState extends State<Activities> {
                 )
               ],
             ),
-            ActivityList()
+            ...activitiesToRender,
           ],
         ),
       ),
-    );
-  }
-}
-
-class ActivityList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children:<Activity> [
-        Activity(activityName: 'Coding', activityColor: Color(0xFFEEF2FF)),
-        Activity(activityName: 'Reading', activityColor: Color(0xFFF0FDF4)),
-        Activity(activityName: 'Walking', activityColor: Color(0xFFFEE2E2)),
-        Activity(activityName: 'Resting', activityColor: Color(0xFFCCFBF1)),
-        Activity(activityName: 'Studying', activityColor: Color(0xFFE0E7FF)),
-        Activity(activityName: 'Writing', activityColor: Color(0xFFEEF2FF)),
-        Activity(activityName: 'Watching TV', activityColor: Color(0xFFF0FDF4)),
-        Activity(activityName: 'Cooking', activityColor: Color(0xFFFEE2E2)),
-        Activity(activityName: 'Sleeping', activityColor: Color(0xFFCCFBF1)),
-        Activity(activityName: 'At the U', activityColor: Color(0xFFE0E7FF)),
-      ],
     );
   }
 }
