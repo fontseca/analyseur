@@ -15,30 +15,43 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     SizeConfig().init(context);
     return Scaffold(
       appBar: buildAppBar(context),
-      body: SingleChildScrollView(child: Body()));
+      body: SingleChildScrollView(child: Body()),
+    );
   }
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        // icon: SvgPicture.asset(
-        //   'assets/icons/settings.svg',
-        //   color: Theme.of(context).iconTheme.color,
-        // ),
-        icon: Icon(
-          Icons.menu,
-          size: 30,
-          color: Theme.of(context).iconTheme.color,
-        ),
-        onPressed: () {},
-      ),
+      title: Text('Activities'),
       actions: [
         IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.notifications,
-            color: Theme.of(context).primaryColor,
-          ),
+          splashRadius: 25,
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return Wrap(
+                  children: [
+                    ListTile(
+                      leading: Icon(Icons.add),
+                      title: Text('New activity'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.filter_alt_outlined),
+                      title: Text('Filter activities'),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.sort),
+                      title: Text('Change order'),
+                      onTap: () {},
+                    )
+                  ],
+                );
+              },
+            );
+          },
+          icon: Icon(Icons.more_vert),
         ),
       ],
     );
