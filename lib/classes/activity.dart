@@ -43,35 +43,16 @@ class _ActivityState extends State<Activity> {
       // then create a new record
       widget.record = new Record(this.widget.activityName);
       widget.record.id = widget.record.generateId();
-      print('Created \'${widget.record.id}\' record');
       // and start the logging the time of the activity
-      print('Starting log for \'${widget.record.id}\'');
       widget.record.startLog();
       widget.activityRecords.add(widget.record);
     } else {
-      print('Starting log for \'${existingRecord.id}\'');
       existingRecord.startLog();
     }
   }
 
   void finishAcitivity() {
-    print('Finished log of \'${widget.record.id}\'');
     widget.record.finishLog();
-  }
-
-  void printactivityRecords() {
-    if (widget.activityRecords.isEmpty) {
-      print('NO ACTIVITY RECORDS YET\n');
-      return;
-    }
-    widget.activityRecords.forEach((record) {
-      print('PRINTING ACTIVITY RECORDS\n----------------');
-      print('Total duration of \'${record.id}\': ${record.totalDuration}');
-      print('Logs of \'${record.id}\'');
-      record.recordLogs.forEach((rl) {
-        print('\t ${rl.duration()} hours');
-      });
-    });
   }
 
   @override
