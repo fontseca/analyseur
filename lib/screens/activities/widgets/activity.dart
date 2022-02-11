@@ -1,6 +1,7 @@
 import 'package:analyseur/classes/activity/record/record.dart';
-import 'package:analyseur/helpers/sizes.dart';
 import 'package:analyseur/screens/activity.dashboard/activity.dashboard.dart';
+import 'package:badges/badges.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -75,85 +76,79 @@ class _ActivityState extends State<Activity> {
 
   @override
   Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: EdgeInsets.all(5),
+      title: Text(widget.activityName),
 
-    return Container(
-      margin: EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(new Radius.circular(5.0)),
-        border: Border.all(
-          color: Color(0xFF242A38).withOpacity(0.05),
-          width: 1,
+      // Activity color
+      leading: Badge(
+        position: BadgePosition(
+          top: 0,
+          end: 0,
         ),
-        gradient: LinearGradient(
-          begin: Alignment.bottomRight,
-          end: Alignment.topLeft,
-          tileMode: TileMode.repeated,
-          colors: [
-            Theme.of(context).backgroundColor,
-            this.widget.activityColor.withOpacity(0.1)
-          ],
-        ),
-      ),
-      child: ListTile(
-        contentPadding: EdgeInsets.all(10),
-        title: Text(
-          widget.activityName,
-          // style: TextStyle(
-          //   fontWeight: FontWeight.bold,
-          //   color: Theme.of(context).appBarTheme.foregroundColor,
-          // ),
-        ),
-        hoverColor: Colors.transparent,
-        dense: true,
-        
-        // Activity color
-        leading: Container(
+        badgeColor: Colors.green.shade300,
+        elevation: 0,
+        showBadge: _activityIsPlaying,
+        child: Container(
           width: 40,
           height: 40,
-          margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(new Radius.circular(50.0)),
+            borderRadius: BorderRadius.circular(50),
             color: this.widget.activityColor,
           ),
         ),
-
-        // Open dashboard
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) {
-                return ActivityDashboard(this.widget);
-              }),
-            );
-        },
-
-        // Play activity
-        trailing: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: Theme.of(context).iconTheme.color,
-          ),
-          child: IconButton(
-            tooltip: _activityIsPlaying ? 'Stop activity' : 'Start activity',
-            splashRadius: 25,
-            icon: Icon(
-              _activityIsPlaying ? Icons.stop : Icons.play_arrow,
-              color: _activityIsPlaying ? widget.activityColor : Theme.of(context).accentIconTheme.color,
-            ),
-            onPressed: () {
-              if (!_activityIsPlaying) {
-                this.startActivity();
-              } else {
-                this.finishAcitivity();
-              }
-              setState(() {
-                _activityIsPlaying = !_activityIsPlaying;
-              });
-            },
-          ),
-        ),
-        
       ),
+
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Wrap(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    _activityIsPlaying ? Icons.stop : Icons.play_arrow, color: widget.activityColor,
+                  ),
+                  title: Text(
+                    !_activityIsPlaying
+                    ? 'Start activity'
+                    : 'Stop activity',
+                  ),
+                  onTap: () {
+                    if (!_activityIsPlaying) {
+                      this.startActivity();
+                    } else {
+                      this.finishAcitivity();
+                    }
+                    setState(() {
+                      _activityIsPlaying = !_activityIsPlaying;
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.edit, color: widget.activityColor,),
+                  title: Text('Edit activity'),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: Icon(Icons.bar_chart),
+                  title: Text('Show dashboard'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) {
+                        return ActivityDashboard(this.widget);
+                      }),
+                    );
+                  },
+                )
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }
