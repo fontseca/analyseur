@@ -13,16 +13,11 @@ class _ActivitiesState extends State<Activities> {
   late List<Activity> activitiesToRender = [];
   // this data will come from the server
   List actData = [
-    ['Coding', Color(0xFFEEF2FF)],
-    ['Reading', Color(0xFFF0FDF4)],
-    ['Walking', Color(0xFFFEE2E2)],
-    ['Resting', Color(0xFFCCFBF1)],
-    ['Studying', Color(0xFFE0E7FF)],
-    ['Writing', Color(0xFFEEF2FF)],
-    ['Watching TV', Color(0xFFF0FDF4)],
-    ['Cooking', Color(0xFFFEE2E2)],
-    ['Sleeping', Color(0xFFCCFBF1)],
-    ['At the U', Color(0xFFE0E7FF)]
+    ['Coding', Color(0xFF1572A1)],
+    ['Reading', Color(0xFFBB6464)],
+    ['Walking', Color(0xFFC0D8C0)],
+    ['Resting', Color(0xFFD3DEDC)],
+    ['Studying', Color(0xFF6D8299)],
   ];
 
   @override
@@ -42,44 +37,8 @@ class _ActivitiesState extends State<Activities> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Activities',
-                  style: TextStyle(fontSize: 24),
-                ),
-                Row(
-                  children: [
-                    MaterialButton(
-                      minWidth: 10,
-                      height: 40,
-                      visualDensity: VisualDensity.compact,
-                      shape: CircleBorder(),
-                      child: Icon(Icons.filter_alt),
-                      onPressed: () {},
-                    ),
-                    MaterialButton(
-                      minWidth: 10,
-                      height: 40,
-                      visualDensity: VisualDensity.compact,
-                      shape: CircleBorder(),
-                      child: Icon(Icons.add),
-                      onPressed: () {},
-                    ),
-                  ],
-                )
-              ],
-            ),
-            ...activitiesToRender,
-          ],
-        ),
-      ),
+      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+      child: Column(children: [...activitiesToRender]),
     );
   }
 }
