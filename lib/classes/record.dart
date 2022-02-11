@@ -1,4 +1,4 @@
-import 'package:analyseur/classes/activity/recordlog/recordlog.dart';
+import 'package:analyseur/classes/recordlog.dart';
 
 class Record {
   late String id;

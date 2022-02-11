@@ -1,7 +1,7 @@
-import 'package:analyseur/classes/activity/record/record.dart';
-import 'package:analyseur/classes/activity/recordlog/recordlog.dart';
+import 'package:analyseur/classes/record.dart';
+import 'package:analyseur/classes/recordlog.dart';
 import 'package:analyseur/helpers/sizes.dart';
-import 'package:analyseur/screens/activities/widgets/activity.dart';
+import 'package:analyseur/classes/activity.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
