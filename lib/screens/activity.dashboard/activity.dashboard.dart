@@ -38,16 +38,6 @@ class _ActivityDashboardState extends State<ActivityDashboard> {
           children: [
             ActivityInformation(widget.act),
             ActivityChart(widget.act),
-            // Records
-            Container(
-              padding: EdgeInsets.all(getProportionateScreenWidth(10)),
-              child: Text(
-                'Records',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            ),
             ...recordsList,
           ],
         ),
@@ -63,7 +53,7 @@ class RecordItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    List<String> days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     List<String> months = [
       'January',
       'February',
@@ -81,7 +71,6 @@ class RecordItem extends StatelessWidget {
     String dayWeek = days[this.record.date.weekday - 1];
     String month = months[this.record.date.month - 1];
     String day = this.record.date.day.toString();
-    String recordDate = '$dayWeek $day, $month';
     double temp = this.record.totalDuration;
     double h = 0.0;
     double m = 0.0;
@@ -95,52 +84,23 @@ class RecordItem extends StatelessWidget {
     temp = (temp % 1) * 60;
     s = temp - (s % 1);
 
-    String durationFormatted = '${h.toInt()}h ${m.toInt()}m ${s.toInt()}s';
+    String durationFormatted = '${h.toInt()}h ${m.toInt()}m';
 
     return Container(
-      padding: EdgeInsets.all(getProportionateScreenWidth(3)),
-      margin: EdgeInsets.fromLTRB(5, 5, 5, 0),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Theme.of(context).accentColor,
-      ),
-      height: getProportionateScreenHeight(60),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Date
-          Text(recordDate, style: TextStyle(fontWeight: FontWeight.bold)),
-          // Actions
-          Container(
-            child: Row(
-              children: [
-                // Duration
-                Text(durationFormatted),
-                // Button
-                MaterialButton(
-                  minWidth: 40,
-                  height: 40,
-                  shape: CircleBorder(),
-                  visualDensity: VisualDensity.compact,
-                  child: Icon(
-                    Icons.chevron_right,
-                    color: Theme.of(context).iconTheme.color,
-                    // size: 35,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) {
-                        return RecordLogs(this.record.recordLogs, 'Test');
-                      }),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
+      child: ListTile(
+        title: Text('$dayWeek', style: TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text('$month $day'),
+        trailing: Text(durationFormatted),
+        tileColor: Theme.of(context).accentColor,
+        dense: true,
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return RecordLogs(this.record.recordLogs, 'Test');
+            })
+          );
+        },
       ),
     );
   }
