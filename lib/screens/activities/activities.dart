@@ -15,9 +15,6 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
   List actData = [
     ['Coding', Color(0xFF1572A1)],
     ['Reading', Color(0xFFBB6464)],
-    ['Walking', Color(0xFFC0D8C0)],
-    ['Resting', Color(0xFFD3DEDC)],
-    ['Studying', Color(0xFF6D8299)],
   ];
 
   @override
@@ -41,7 +38,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
       appBar: buildAppBar(context),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: Column(children: [...activitiesToRender]),
         ),
       ),
@@ -62,17 +59,17 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   children: [
                     ListTile(
                       leading: Icon(Icons.add),
-                      title: Text('New activity'),
+                      title: Text('New activity', style: TextStyle(color: Theme.of(context).textTheme.bodyText1?.color)),
                       onTap: () {},
                     ),
                     ListTile(
                       leading: Icon(Icons.filter_alt_outlined),
-                      title: Text('Filter activities'),
+                      title: Text('Filter activities', style: TextStyle(color: Theme.of(context).textTheme.bodyText1?.color)),
                       onTap: () {},
                     ),
                     ListTile(
                       leading: Icon(Icons.sort),
-                      title: Text('Change order'),
+                      title: Text('Change order', style: TextStyle(color: Theme.of(context).textTheme.bodyText1?.color)),
                       onTap: () {},
                     )
                   ],

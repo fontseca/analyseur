@@ -1,51 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:analyseur/static/colors.dart';
-
-AppBarTheme appBarTheme = AppBarTheme(
-  color: Colors.transparent,
-  elevation: 0
-);
 
 ThemeData lightTheme(BuildContext context) {
   return ThemeData(
-    appBarTheme: appBarTheme,
-    primaryColor: kPrimaryColor,
+    appBarTheme: AppBarTheme(
+      color: kPrimaryLightColor,
+      elevation: 0.5,
+    ),
+    primaryColor: kPrimaryLightColor,
     accentColor: kAccentLightColor,
-    scaffoldBackgroundColor: Colors.white,
-    backgroundColor: Colors.white,
+    scaffoldBackgroundColor: kBackgroundLightColor,
+    backgroundColor: kBackgroundLightColor,
     colorScheme: ColorScheme.light(secondary: kSecondaryLightColor),
     iconTheme: IconThemeData(color: kBodyTextColorLight),
     accentIconTheme: IconThemeData(color: kAccentIconLightColor),
     primaryIconTheme: IconThemeData(color: kPrimaryIconLightColor),
-    textTheme: GoogleFonts.montserratTextTheme().copyWith(
-      bodyText1: TextStyle(color: kBodyTextColorLight),
-      bodyText2: TextStyle(color: kBodyTextColorLight),
-      headline4: TextStyle(color: kTitleTextLightColor, fontSize: 32),
-      headline1: TextStyle(color: kTitleTextLightColor, fontSize: 80),
-    )
   );
 }
 
 ThemeData darkTheme(BuildContext context) {
   return ThemeData.dark().copyWith(
-    primaryColor: kPrimaryColor,
+    primaryColor: kPrimaryDarkColor,
     accentColor: kAccentDarkColor,
-    scaffoldBackgroundColor: Color(0xFF0D0C0E),
-    appBarTheme: appBarTheme,
-    colorScheme: ColorScheme.light(
-      secondary: kSecondaryDarkColor,
-      surface: kSurfaceDarkColor,
-    ),
+    scaffoldBackgroundColor: kBackgroundDarkColor,
     backgroundColor: kBackgroundDarkColor,
-    iconTheme: IconThemeData(color: kBodyTextColorDark),
-    accentIconTheme: IconThemeData(color: kAccentIconDarkColor),
-    primaryIconTheme: IconThemeData(color: kPrimaryIconDarkColor),
-    textTheme: GoogleFonts.montserratTextTheme().copyWith(
-      bodyText1: TextStyle(color: kBodyTextColorDark),
-      bodyText2: TextStyle(color: kBodyTextColorDark),
-      headline4: TextStyle(color: kTitleTextDarkColor, fontSize: 32),
-      headline1: TextStyle(color: kTitleTextDarkColor, fontSize: 80),
-    )
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: kBackgroundDarkColor,
+    ),
+    appBarTheme: AppBarTheme(
+      color: kPrimaryDarkColor,
+      elevation: 1,
+      iconTheme: IconThemeData(color: kBodyTextColorDark),
+      textTheme: TextTheme(title: TextStyle(fontSize: 20)).apply(bodyColor: kBodyTextColorDark),
+    ),
+    textTheme: TextTheme(bodyText1: TextStyle(), bodyText2: TextStyle()).apply(
+      bodyColor: kBodyTextColorDark,
+      displayColor: kBodyTextColorDark,
+    ),
   );
 }
