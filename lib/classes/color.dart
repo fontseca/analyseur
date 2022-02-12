@@ -2,18 +2,18 @@ import 'package:analyseur/screens/activities/new.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class ColorPicker extends StatefulWidget {
+class InternalActivityColor extends StatefulWidget {
   final Color color;
   final String colorName;
   final NewActivityState ref;
 
-  ColorPicker(this.color, this.colorName, this.ref);
+  InternalActivityColor(this.color, this.colorName, this.ref);
 
   @override
-  _ColorPickerState createState() => _ColorPickerState();
+  _InternalActivityColorState createState() => _InternalActivityColorState();
 }
 
-class _ColorPickerState extends State<ColorPicker> {
+class _InternalActivityColorState extends State<InternalActivityColor> {
   @override
   Widget build(BuildContext context) {
     return Stack(
