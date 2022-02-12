@@ -1,4 +1,5 @@
 import 'package:analyseur/classes/activity.dart';
+import 'package:analyseur/screens/activities/new.dart';
 import 'package:flutter/material.dart';
 import 'package:analyseur/helpers/sizes.dart';
 
@@ -17,18 +18,10 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     ['Reading', Color(0xFFBB6464)],
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    int numberOfActivities = actData.length;
-    int i;
-
-    for (i = 0; i < numberOfActivities; ++i) {
-      activitiesToRender.add(Activity(
-        activityName: actData[i][0],
-        activityColor: actData[i][1],
-      ));
-    }
+  void createNewAcitivity() {
+    setState(() {
+      this.actData.add(['Test', Colors.redAccent]);
+    });
   }
 
   @override
@@ -36,10 +29,16 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     SizeConfig().init(context);
     return Scaffold(
       appBar: buildAppBar(context),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: Column(children: [...activitiesToRender]),
+      body: Container(
+        child: ListView.builder(
+          padding: EdgeInsets.fromLTRB(12, 10, 12, 0),
+          itemCount: this.actData.length,
+          itemBuilder: (BuildContext context, i) {
+            return Activity(
+              activityName: this.actData[i][0],
+              activityColor: this.actData[i][1],
+            );
+          },
         ),
       ),
     );
@@ -59,17 +58,40 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                   children: [
                     ListTile(
                       leading: Icon(Icons.add),
-                      title: Text('New activity', style: TextStyle(color: Theme.of(context).textTheme.bodyText1?.color)),
-                      onTap: () {},
+                      title: Text(
+                        'New activity',
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyText1?.color,
+                        ),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return NewActivity();
+                          }),
+                        );
+                      },
                     ),
                     ListTile(
                       leading: Icon(Icons.filter_alt_outlined),
-                      title: Text('Filter activities', style: TextStyle(color: Theme.of(context).textTheme.bodyText1?.color)),
+                      title: Text(
+                        'Filter activities',
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyText1?.color,
+                        ),
+                      ),
                       onTap: () {},
                     ),
                     ListTile(
                       leading: Icon(Icons.sort),
-                      title: Text('Change order', style: TextStyle(color: Theme.of(context).textTheme.bodyText1?.color)),
+                      title: Text(
+                        'Change order',
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyText1?.color,
+                        ),
+                      ),
                       onTap: () {},
                     )
                   ],
