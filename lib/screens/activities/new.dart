@@ -1,3 +1,4 @@
+import 'package:analyseur/classes/activity.dart';
 import 'package:analyseur/classes/color.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,11 @@ class NewActivityState extends State<NewActivity> {
     InternalActivityColor(Colors.brown, 'Brown', this),
   ];
   late InternalActivityColor pickedColor = defaultColors[0];
+  late String actName = '';
+  late Color actColor = pickedColor.color;
+  late String actDesc = '';
+  final _nameController = TextEditingController();
+  final _descController = TextEditingController();
 
   void selectColor(String name) {
     for (int i = 0; i < defaultColors.length; ++i) {
@@ -28,16 +34,32 @@ class NewActivityState extends State<NewActivity> {
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _descController.dispose();
+    super.dispose();
+  }
+
+  Activity createNewActivity() {
+    return Activity(
+      activityName: _nameController.text,
+      activityColor: pickedColor.color,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarBuilder(context),
-      body: bodyBuilder(context, defaultColors, pickedColor),
+      appBar: appBarBuilder(context, this),
+      body: bodyBuilder(context, defaultColors, pickedColor, this),
     );
   }
 }
 
-AppBar appBarBuilder(BuildContext context) {
+AppBar appBarBuilder(BuildContext context, NewActivityState self) {
   return AppBar(
+    // Close page
+    // future assert: not close if there exist info
     leading: IconButton(
       splashRadius: 25,
       icon: Icon(Icons.close),
@@ -45,12 +67,15 @@ AppBar appBarBuilder(BuildContext context) {
         Navigator.pop(context);
       },
     ),
+
+    // Create
     title: Text('New activity'),
     actions: [
       IconButton(
         splashRadius: 25,
         icon: Icon(Icons.done),
         onPressed: () {
+          self.createNewActivity();
           Navigator.pop(context);
         },
       ),
@@ -62,22 +87,23 @@ ListView bodyBuilder(
   BuildContext context,
   List<InternalActivityColor> defaultColors,
   InternalActivityColor pickedColor,
-  ) {
-    final theme = Theme.of(context);
-    final titleColor = theme.textTheme.bodyText1?.color;
-    final subTextColor = theme.textTheme.bodyText1?.color!.withOpacity(0.4);
+  NewActivityState self,
+) {
+  final theme = Theme.of(context);
+  final titleColor = theme.textTheme.bodyText1?.color;
+  final subTextColor = theme.textTheme.bodyText1?.color!.withOpacity(0.4);
 
-    void showColorPicker() {
-      showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [...defaultColors],
-          );
-        },
-      );
-    }
+  void showColorPicker() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [...defaultColors],
+        );
+      },
+    );
+  }
 
   return ListView(
     children: [
@@ -88,6 +114,7 @@ ListView bodyBuilder(
         subtitle: Container(
           height: 15,
           child: TextField(
+            controller: self._nameController,
             style: TextStyle(color: subTextColor, fontSize: 14),
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -106,9 +133,8 @@ ListView bodyBuilder(
       ListTile(
         leading: Icon(Icons.circle, color: pickedColor.color),
         title: Text('Color', style: TextStyle(color: titleColor)),
-        subtitle: Text(
-          pickedColor.colorName,
-          style: TextStyle(color: subTextColor, fontSize: 14)),
+        subtitle: Text(pickedColor.colorName,
+            style: TextStyle(color: subTextColor, fontSize: 14)),
         onTap: showColorPicker,
       ),
       Divider(height: 0),
@@ -120,6 +146,7 @@ ListView bodyBuilder(
         subtitle: Container(
           height: 15,
           child: TextField(
+            controller: self._descController,
             style: TextStyle(color: subTextColor, fontSize: 14),
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -138,8 +165,8 @@ ListView bodyBuilder(
       ListTile(
         leading: Icon(Icons.category),
         title: Text('Category', style: TextStyle(color: titleColor)),
-        subtitle: Text('Others',
-            style: TextStyle(color: subTextColor, fontSize: 14)),
+        subtitle:
+            Text('Others', style: TextStyle(color: subTextColor, fontSize: 14)),
         onTap: showColorPicker,
       ),
     ],
