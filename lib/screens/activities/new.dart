@@ -75,8 +75,8 @@ AppBar appBarBuilder(BuildContext context, NewActivityState self) {
         splashRadius: 25,
         icon: Icon(Icons.done),
         onPressed: () {
-          self.createNewActivity();
-          Navigator.pop(context);
+          // ;
+          Navigator.pop(context, self.createNewActivity());
         },
       ),
     ],

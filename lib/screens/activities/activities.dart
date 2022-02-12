@@ -18,9 +18,13 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     ['Reading', Color(0xFFBB6464)],
   ];
 
-  void createNewAcitivity() {
+  void _createNewActivity(BuildContext context) async {
+    final Activity res = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NewActivity()),
+    );
     setState(() {
-      this.actData.add(['Test', Colors.redAccent]);
+      this.actData.add([res.activityName, res.activityColor]);
     });
   }
 
@@ -28,7 +32,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      appBar: buildAppBar(context),
+      appBar: buildAppBar(context, this),
       body: Container(
         child: ListView.builder(
           padding: EdgeInsets.fromLTRB(12, 10, 12, 0),
@@ -44,7 +48,10 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     );
   }
 
-  AppBar buildAppBar(BuildContext context) {
+  AppBar buildAppBar(
+    BuildContext context,
+    _ActivitiesScreenState self,
+  ) {
     return AppBar(
       title: Text('Activities'),
       actions: [
@@ -66,12 +73,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
                       ),
                       onTap: () {
                         Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return NewActivity();
-                          }),
-                        );
+                        self._createNewActivity(context);
                       },
                     ),
                     ListTile(
