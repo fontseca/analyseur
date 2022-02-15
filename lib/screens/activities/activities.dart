@@ -57,53 +57,54 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
       actions: [
         IconButton(
           splashRadius: 25,
+          icon: Icon(Icons.add),
           onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return Wrap(
-                  children: [
-                    ListTile(
-                      leading: Icon(Icons.add),
-                      title: Text(
-                        'New activity',
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText1?.color,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        self._createNewActivity(context);
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.filter_alt_outlined),
-                      title: Text(
-                        'Filter activities',
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText1?.color,
-                        ),
-                      ),
-                      onTap: () {},
-                    ),
-                    ListTile(
-                      leading: Icon(Icons.sort),
-                      title: Text(
-                        'Change order',
-                        style: TextStyle(
-                          color: Theme.of(context).textTheme.bodyText1?.color,
-                        ),
-                      ),
-                      onTap: () {},
-                    )
-                  ],
-                );
-              },
-            );
+            self._createNewActivity(context);
           },
+        ),
+        IconButton(
+          splashRadius: 25,
           icon: Icon(Icons.more_vert),
+          onPressed: () {
+            showModalBottomSheetUI(context, self);
+          },
         ),
       ],
+    );
+  }
+
+  void showModalBottomSheetUI(
+    BuildContext context,
+    _ActivitiesScreenState self
+  ) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Wrap(
+          children: [
+            ListTile(
+              leading: Icon(Icons.filter_alt_outlined),
+              title: Text(
+                'Filter activities',
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyText1?.color,
+                ),
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.sort),
+              title: Text(
+                'Change order',
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodyText1?.color,
+                ),
+              ),
+              onTap: () {},
+            )
+          ],
+        );
+      },
     );
   }
 }
