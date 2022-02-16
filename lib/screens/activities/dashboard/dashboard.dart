@@ -36,10 +36,29 @@ class _ActivityDashboardState extends State<ActivityDashboard> {
           children: [
             ActivityInformation(widget.act),
             ActivityChart(widget.act),
+            recordTitle(),
             ...recordsList,
           ],
         ),
       ),
     );
+  }
+
+  Widget recordTitle() {
+    if (widget.act.activityRecords.length > 0) {
+      return Container(
+        margin: EdgeInsets.fromLTRB(20, 0, 0, 10),
+        child: Text(
+          'Records',
+          style: TextStyle(
+            fontSize: 20
+          ),
+        ),
+      );
+    } else {
+      return Center(
+        child: Text('No records yet. Play this activity to add a new record.'),
+      );
+    }
   }
 }
