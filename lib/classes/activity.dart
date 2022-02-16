@@ -1,5 +1,5 @@
 import 'package:analyseur/classes/record.dart';
-import 'package:analyseur/screens/activities/dashboard.dart';
+import 'package:analyseur/screens/activities/dashboard/dashboard.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
