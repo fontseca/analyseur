@@ -72,6 +72,21 @@ class _ActivityState extends State<Activity> {
           ),
         ),
 
+        trailing: IconButton(
+          splashRadius: 25,
+          icon: Icon(_activityIsPlaying ? Icons.stop : Icons.play_arrow),
+          onPressed: () {
+            if (!_activityIsPlaying) {
+              this.startActivity();
+            } else {
+              this.finishAcitivity();
+            }
+            setState(() {
+              _activityIsPlaying = !_activityIsPlaying;
+            });
+          },
+        ),
+
         // Activity color
         leading: Badge(
           position: BadgePosition(
@@ -92,59 +107,45 @@ class _ActivityState extends State<Activity> {
         ),
 
         onTap: () {
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Wrap(
-                children: [
-                  ListTile(
-                    leading: Icon(
-                      _activityIsPlaying ? Icons.stop : Icons.play_arrow,
-                      color: widget.activityColor,
-                    ),
-                    title: Text(
-                      !_activityIsPlaying ? 'Start activity' : 'Stop activity',
-                      style: TextStyle(color: Theme.of(context).textTheme.bodyText1?.color),
-                    ),
-                    onTap: () {
-                      if (!_activityIsPlaying) {
-                        this.startActivity();
-                      } else {
-                        this.finishAcitivity();
-                      }
-                      setState(() {
-                        _activityIsPlaying = !_activityIsPlaying;
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.edit,
-                      color: widget.activityColor,
-                    ),
-                    title: Text('Edit activity', style: TextStyle(color: Theme.of(context).textTheme.bodyText1?.color),),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.bar_chart),
-                    title: Text('Show dashboard', style: TextStyle(color: Theme.of(context).textTheme.bodyText1?.color)),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return ActivityDashboard(this.widget);
-                        }),
-                      );
-                    },
-                  )
-                ],
-              );
-            },
+          // Show dashboard
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return ActivityDashboard(this.widget);
+            }),
           );
         },
+
+        onLongPress: () {
+          openModalBottomSheet(context);
+        },
       ),
+    );
+  }
+
+  void openModalBottomSheet(
+    BuildContext context,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Wrap(
+          children: [
+            ListTile(
+              leading: Icon(
+                Icons.edit,
+                color: widget.activityColor,
+              ),
+              title: Text(
+                'Edit activity',
+                style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyText1?.color),
+              ),
+              onTap: () {},
+            ),
+          ],
+        );
+      },
     );
   }
 }
