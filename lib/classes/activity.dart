@@ -6,12 +6,18 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class Activity extends StatefulWidget {
-  final String activityName;
-  final Color activityColor;
+  final String name;
+  final Color color;
+  final String description;
+  final String category;
 
-  Activity({required this.activityName, required this.activityColor});
+  Activity({
+    required this.name,
+    required this.color,
+    required this.description,
+    required this.category,
+  });
 
-  late String desc = '';
   late double total;
   late List<Record> activityRecords = [];
   late Record record;
@@ -41,7 +47,7 @@ class _ActivityState extends State<Activity> {
     // if there are not records for the current day
     if (!recordExists) {
       // then create a new record
-      widget.record = new Record(this.widget.activityName);
+      widget.record = new Record(this.widget.name);
       widget.record.id = widget.record.generateId();
       // and start the logging the time of the activity
       widget.record.startLog();
@@ -66,7 +72,7 @@ class _ActivityState extends State<Activity> {
 
         // Title
         title: Text(
-          widget.activityName,
+          widget.name,
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyText1?.color,
           ),
@@ -101,7 +107,7 @@ class _ActivityState extends State<Activity> {
             height: 40,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
-              color: this.widget.activityColor,
+              color: this.widget.color,
             ),
           ),
         ),
@@ -134,7 +140,7 @@ class _ActivityState extends State<Activity> {
             ListTile(
               leading: Icon(
                 Icons.edit,
-                color: widget.activityColor,
+                color: widget.color,
               ),
               title: Text(
                 'Edit activity',

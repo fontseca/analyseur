@@ -14,8 +14,8 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
   late List<Activity> activitiesToRender = [];
   // this data will come from the server
   List actData = [
-    ['Coding', Color(0xFF1572A1)],
-    ['Reading', Color(0xFFBB6464)],
+    ['Coding', Color(0xFF1572A1), '', 'Others'],
+    ['Reading', Color(0xFFBB6464), '', 'Others'],
   ];
 
   void _createNewActivity(BuildContext context) async {
@@ -24,7 +24,12 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
       MaterialPageRoute(builder: (context) => NewActivity()),
     );
     setState(() {
-      this.actData.add([res.activityName, res.activityColor]);
+      this.actData.add([
+        res.name,
+        res.color,
+        res.description,
+        res.category,
+      ]);
     });
   }
 
@@ -39,8 +44,10 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
           itemCount: this.actData.length,
           itemBuilder: (BuildContext context, i) {
             return Activity(
-              activityName: this.actData[i][0],
-              activityColor: this.actData[i][1],
+              name: this.actData[i][0],
+              color: this.actData[i][1],
+              description: this.actData[i][2],
+              category: this.actData[i][3],
             );
           },
         ),

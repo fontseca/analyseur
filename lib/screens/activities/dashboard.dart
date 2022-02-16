@@ -53,7 +53,15 @@ class RecordItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    List<String> days = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday'
+    ];
     List<String> months = [
       'January',
       'February',
@@ -94,12 +102,9 @@ class RecordItem extends StatelessWidget {
         tileColor: Theme.of(context).accentColor,
         dense: true,
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) {
-              return RecordLogs(this.record.recordLogs, 'Test');
-            })
-          );
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return RecordLogs(this.record.recordLogs, 'Test');
+          }));
         },
       ),
     );
@@ -136,19 +141,19 @@ class _ActivityInformationState extends State<ActivityInformation> {
                     height: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(50)),
-                      color: widget.act.activityColor,
+                      color: widget.act.color,
                     ),
                   ),
                   // Name
                   Text(
-                    widget.act.activityName,
+                    widget.act.name,
                     style: TextStyle(fontSize: getProportionateScreenWidth(30)),
                   ),
                 ],
               ),
               // Color code text
               Text(
-                '0x${widget.act.activityColor.value.toRadixString(16).toUpperCase()}',
+                '0x${widget.act.color.value.toRadixString(16).toUpperCase()}',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
@@ -156,9 +161,9 @@ class _ActivityInformationState extends State<ActivityInformation> {
           Padding(
             padding: EdgeInsets.all(getProportionateScreenWidth(6)),
             child: Text(
-              widget.act.desc.isEmpty
+              widget.act.description.isEmpty
                   ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-                  : widget.act.desc,
+                  : widget.act.description,
               style: TextStyle(
                 height: 1.5,
               ),

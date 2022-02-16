@@ -53,8 +53,10 @@ class NewActivityState extends State<NewActivity> {
 
   Activity createNewActivity() {
     return Activity(
-      activityName: _nameController.text,
-      activityColor: pickedColor.color,
+      name: _nameController.text,
+      color: pickedColor.color,
+      description: _descController.text,
+      category: 'Others',
     );
   }
 
