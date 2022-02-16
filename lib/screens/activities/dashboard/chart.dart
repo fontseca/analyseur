@@ -39,7 +39,6 @@ class _ActivityChartState extends State<ActivityChart> {
 
     return Container(
       width: double.infinity,
-      height: getProportionateScreenWidth(250),
       child: SfCartesianChart(
         // Duration
         primaryYAxis: NumericAxis(
@@ -61,10 +60,9 @@ class _ActivityChartState extends State<ActivityChart> {
           ),
           minimum: DateTime(2022, 2, (DateTime.now().day - 6)),
           maximum: DateTime.now(),
-          interval: 1,
-          // title: AxisTitle(text: 'Last week'),
+          title: AxisTitle(text: 'Last week'),
           dateFormat: DateFormat('EEE').add_d(),
-          labelRotation: -10,
+          // labelRotation: -10,
           labelAlignment: LabelAlignment.center,
           labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 9),
           axisLine: AxisLine(
@@ -79,7 +77,7 @@ class _ActivityChartState extends State<ActivityChart> {
               xValueMapper: (WeekRecordPoint record, _) => record.weekday,
               yValueMapper: (WeekRecordPoint record, _) => record.duration,
               color: widget.self.color.withOpacity(0.5),
-              width: 0.5,
+              width: 1,
               markerSettings: MarkerSettings(
                 isVisible: true,
                 height: 1,
