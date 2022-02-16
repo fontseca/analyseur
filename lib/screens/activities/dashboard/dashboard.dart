@@ -2,7 +2,7 @@ import 'package:analyseur/classes/record-item.dart';
 import 'package:analyseur/classes/activity.dart';
 import 'package:analyseur/screens/activities/dashboard/chart.dart';
 import 'package:flutter/material.dart';
-import 'info.dart';
+import 'activity-info.dart';
 
 class ActivityDashboard extends StatefulWidget {
   final Activity act;
