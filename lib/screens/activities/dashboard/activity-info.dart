@@ -38,7 +38,7 @@ class _ActivityInformationState extends State<ActivityInformation> {
                   // Name
                   Text(
                     widget.act.name,
-                    style: TextStyle(fontSize: getProportionateScreenWidth(30)),
+                    style: TextStyle(fontSize: getProportionateScreenHeight(30)),
                   ),
                 ],
               ),
@@ -49,15 +49,12 @@ class _ActivityInformationState extends State<ActivityInformation> {
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.all(getProportionateScreenWidth(6)),
-            child: Text(
-              widget.act.description.isEmpty
-                  ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-                  : widget.act.description,
-              style: TextStyle(
-                height: 1.5,
-              ),
+          Text(
+            widget.act.description.isEmpty
+                ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+                : widget.act.description,
+            style: TextStyle(
+              height: 1.5,
             ),
           ),
         ],
