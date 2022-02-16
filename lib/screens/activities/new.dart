@@ -22,6 +22,8 @@ class NewActivityState extends State<NewActivity> {
   late String actDesc = '';
   final _nameController = TextEditingController();
   final _descController = TextEditingController();
+  late FocusNode _nameFocusNode;
+  late FocusNode _descFocusNode;
 
   void selectColor(String name) {
     for (int i = 0; i < defaultColors.length; ++i) {
@@ -34,9 +36,18 @@ class NewActivityState extends State<NewActivity> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _nameFocusNode = FocusNode();
+    _descFocusNode = FocusNode();
+  }
+
+  @override
   void dispose() {
     _nameController.dispose();
     _descController.dispose();
+    _nameFocusNode.dispose();
+    _descFocusNode.dispose();
     super.dispose();
   }
 
@@ -49,9 +60,14 @@ class NewActivityState extends State<NewActivity> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBarBuilder(context, this),
-      body: bodyBuilder(context, defaultColors, pickedColor, this),
+    return GestureDetector(
+      child: Scaffold(
+        appBar: appBarBuilder(context, this),
+        body: bodyBuilder(context, defaultColors, pickedColor, this),
+      ),
+      onTap: () {
+          FocusScope.of(context).unfocus();
+      }
     );
   }
 }
@@ -94,6 +110,7 @@ ListView bodyBuilder(
   final subTextColor = theme.textTheme.bodyText1?.color!.withOpacity(0.4);
 
   void showColorPicker() {
+    FocusScope.of(context).unfocus();
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -114,6 +131,7 @@ ListView bodyBuilder(
         subtitle: Container(
           height: 15,
           child: TextField(
+            focusNode: self._nameFocusNode,
             controller: self._nameController,
             style: TextStyle(color: subTextColor, fontSize: 14),
             decoration: InputDecoration(
@@ -124,7 +142,9 @@ ListView bodyBuilder(
             ),
           ),
         ),
-        onTap: () {},
+        onTap: () {
+          self._nameFocusNode.requestFocus();
+        },
         focusColor: Colors.transparent,
       ),
       Divider(height: 0),
@@ -139,7 +159,7 @@ ListView bodyBuilder(
       ),
       Divider(height: 0),
 
-      ///// Act color
+      ///// Act desc
       ListTile(
         leading: Icon(Icons.description),
         title: Text('Descirption', style: TextStyle(color: titleColor)),
@@ -147,6 +167,7 @@ ListView bodyBuilder(
           height: 15,
           child: TextField(
             controller: self._descController,
+            focusNode: self._descFocusNode,
             style: TextStyle(color: subTextColor, fontSize: 14),
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -156,7 +177,9 @@ ListView bodyBuilder(
             ),
           ),
         ),
-        onTap: () {},
+        onTap: () {
+          self._descFocusNode.requestFocus();
+        },
         focusColor: Colors.transparent,
       ),
       Divider(height: 0),
