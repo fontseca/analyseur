@@ -41,6 +41,7 @@ class RecordLogs extends StatelessWidget {
             margin: EdgeInsets.fromLTRB(5, 5, 5, 0),
             child: ListTile(
               dense: true,
+              leading: Icon(Icons.timelapse),
               title: Text(
                 'At $start',
                 style: TextStyle(
