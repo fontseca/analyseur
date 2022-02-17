@@ -1,11 +1,11 @@
-import 'package:analyseur/classes/recordlog.dart';
+import 'package:analyseur/models/recordlog_model.dart';
 import 'package:flutter/material.dart';
 
-class RecordLogs extends StatelessWidget {
+class RecordLogsScreen extends StatelessWidget {
   final List<RecordLog> rlogs;
   final String title;
 
-  RecordLogs(this.rlogs, this.title);
+  RecordLogsScreen(this.rlogs, this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,10 @@ class RecordLogs extends StatelessWidget {
           String sS = this.rlogs[i].startDate.second.toString();
           String start = '$sH°$sM\'$sS\'\'';
 
-          String eH = this.rlogs[i].endDate.hour.toString();
-          String eM = this.rlogs[i].endDate.minute.toString();
-          String eS = this.rlogs[i].endDate.second.toString();
-          String end = '$eH°$eM\'$eS\'\'';
+          // String eH = this.rlogs[i].endDate.hour.toString();
+          // String eM = this.rlogs[i].endDate.minute.toString();
+          // String eS = this.rlogs[i].endDate.second.toString();
+          // String end = '$eH°$eM\'$eS\'\'';
 
           double temp = this.rlogs[i].duration();
           double h = 0.0;

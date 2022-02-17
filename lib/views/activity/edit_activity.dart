@@ -1,22 +1,24 @@
-import 'package:analyseur/classes/activity.dart';
-import 'package:analyseur/classes/color.dart';
+import 'package:analyseur/components/ui_color_circle.dart';
+import 'package:analyseur/models/activity_model.dart';
 import 'package:flutter/material.dart';
 
-class NewActivity extends StatefulWidget {
-  const NewActivity({Key? key}) : super(key: key);
+class EditActivityScreen extends StatefulWidget {
+  final Activity activity;
+  EditActivityScreen({required this.activity});
 
   @override
-  NewActivityState createState() => NewActivityState();
+  EditActivityScreenState createState() => EditActivityScreenState();
 }
 
-class NewActivityState extends State<NewActivity> {
-  late List<InternalActivityColor> defaultColors = [
-    InternalActivityColor(Colors.greenAccent, 'Green', this),
-    InternalActivityColor(Colors.redAccent, 'Redish', this),
-    InternalActivityColor(Colors.purpleAccent, 'Purlple', this),
-    InternalActivityColor(Colors.brown, 'Brown', this),
+class EditActivityScreenState extends State<EditActivityScreen> {
+  late List<ActivityColorCircleWidget> defaultColors = [
+    ActivityColorCircleWidget(Colors.greenAccent, 'Green', this),
+    ActivityColorCircleWidget(Colors.redAccent, 'Redish', this),
+    ActivityColorCircleWidget(Colors.purpleAccent, 'Purlple', this),
+    ActivityColorCircleWidget(Colors.brown, 'Brown', this),
   ];
-  late InternalActivityColor pickedColor = defaultColors[0];
+  late Activity act = widget.activity;
+  late ActivityColorCircleWidget pickedColor = defaultColors[0];
   late String actName = '';
   late Color actColor = pickedColor.color;
   late String actDesc = '';
@@ -38,6 +40,7 @@ class NewActivityState extends State<NewActivity> {
   @override
   void initState() {
     super.initState();
+    pickedColor = ActivityColorCircleWidget(this.act.color, '', this);
     _nameFocusNode = FocusNode();
     _descFocusNode = FocusNode();
   }
@@ -51,30 +54,30 @@ class NewActivityState extends State<NewActivity> {
     super.dispose();
   }
 
-  Activity createNewActivity() {
-    return Activity(
-      name: _nameController.text,
-      color: pickedColor.color,
-      description: _descController.text,
-      category: 'Others',
-    );
+  void editActivity() {
+    widget.activity.name = _nameController.text;
+    // return Activity(
+    //   name: _nameController.text,
+    //   color: pickedColor.color,
+    //   description: _descController.text,
+    //   category: 'Others',
+    // );
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      child: Scaffold(
-        appBar: appBarBuilder(context, this),
-        body: bodyBuilder(context, defaultColors, pickedColor, this),
-      ),
-      onTap: () {
+        child: Scaffold(
+          appBar: appBarBuilder(context, this),
+          body: bodyBuilder(context, defaultColors, pickedColor, this),
+        ),
+        onTap: () {
           FocusScope.of(context).unfocus();
-      }
-    );
+        });
   }
 }
 
-AppBar appBarBuilder(BuildContext context, NewActivityState self) {
+AppBar appBarBuilder(BuildContext context, EditActivityScreenState self) {
   return AppBar(
     // Close page
     // future assert: not close if there exist info
@@ -87,14 +90,14 @@ AppBar appBarBuilder(BuildContext context, NewActivityState self) {
     ),
 
     // Create
-    title: Text('New activity'),
+    title: Text('Edit activity'),
     actions: [
       IconButton(
         splashRadius: 25,
         icon: Icon(Icons.done),
         onPressed: () {
-          // ;
-          Navigator.pop(context, self.createNewActivity());
+          // Navigator.pop(context, self.editActivity());
+          Navigator.pop(context);
         },
       ),
     ],
@@ -103,9 +106,9 @@ AppBar appBarBuilder(BuildContext context, NewActivityState self) {
 
 ListView bodyBuilder(
   BuildContext context,
-  List<InternalActivityColor> defaultColors,
-  InternalActivityColor pickedColor,
-  NewActivityState self,
+  List<ActivityColorCircleWidget> defaultColors,
+  ActivityColorCircleWidget pickedColor,
+  EditActivityScreenState self,
 ) {
   final theme = Theme.of(context);
   final titleColor = theme.textTheme.bodyText1?.color;
@@ -131,14 +134,14 @@ ListView bodyBuilder(
         leading: Icon(Icons.title),
         title: Text('Name', style: TextStyle(color: titleColor)),
         subtitle: Container(
-          height: 15,
+          height: 16,
           child: TextField(
             focusNode: self._nameFocusNode,
             controller: self._nameController,
             style: TextStyle(color: subTextColor, fontSize: 14),
             decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: 'Name',
+              hintText: self.act.name,
               hintStyle: TextStyle(color: subTextColor),
               filled: false,
             ),
@@ -173,7 +176,9 @@ ListView bodyBuilder(
             style: TextStyle(color: subTextColor, fontSize: 14),
             decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: 'No description',
+              hintText: self.act.description.isEmpty
+                  ? 'No description'
+                  : self.act.description,
               hintStyle: TextStyle(color: subTextColor),
               filled: false,
             ),

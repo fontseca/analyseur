@@ -1,19 +1,18 @@
-import 'package:analyseur/screens/activities/new.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class InternalActivityColor extends StatefulWidget {
+class ActivityColorCircleWidget extends StatefulWidget {
   final Color color;
   final String colorName;
-  final NewActivityState ref;
+  final dynamic ref;
 
-  InternalActivityColor(this.color, this.colorName, this.ref);
+  ActivityColorCircleWidget(this.color, this.colorName, this.ref);
 
   @override
-  _InternalActivityColorState createState() => _InternalActivityColorState();
+  _ActivityColorCircleWidgetState createState() => _ActivityColorCircleWidgetState();
 }
 
-class _InternalActivityColorState extends State<InternalActivityColor> {
+class _ActivityColorCircleWidgetState extends State<ActivityColorCircleWidget> {
   @override
   Widget build(BuildContext context) {
     return Stack(

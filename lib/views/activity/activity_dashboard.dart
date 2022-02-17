@@ -1,8 +1,8 @@
-import 'package:analyseur/classes/record-item.dart';
-import 'package:analyseur/classes/activity.dart';
-import 'package:analyseur/screens/activities/dashboard/chart.dart';
+import 'package:analyseur/components/ui_record_tile.dart';
+import 'package:analyseur/models/activity_model.dart';
+import 'package:analyseur/views/activity/activity_chart.dart';
 import 'package:flutter/material.dart';
-import 'activity-info.dart';
+import 'activity_information.dart';
 
 class ActivityDashboard extends StatefulWidget {
   final Activity act;
@@ -14,13 +14,13 @@ class ActivityDashboard extends StatefulWidget {
 }
 
 class _ActivityDashboardState extends State<ActivityDashboard> {
-  List<RecordItem> recordsList = [];
+  List<RecordTileWidget> recordsList = [];
 
   @override
   void initState() {
     super.initState();
     widget.act.activityRecords.forEach((record) {
-      recordsList.add(RecordItem(record));
+      recordsList.add(RecordTileWidget(record));
     });
   }
 

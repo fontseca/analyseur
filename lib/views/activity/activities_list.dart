@@ -1,7 +1,8 @@
-import 'package:analyseur/classes/activity.dart';
-import 'package:analyseur/screens/activities/new.dart';
+import 'package:analyseur/components/ui_activity_tile.dart';
+import 'package:analyseur/models/activity_model.dart';
+import 'package:analyseur/views/activity/create_activity.dart';
 import 'package:flutter/material.dart';
-import 'package:analyseur/helpers/sizes.dart';
+import 'package:analyseur/sizes.dart';
 
 class ActivitiesScreen extends StatefulWidget {
   ActivitiesScreen({Key? key}) : super(key: key);
@@ -11,25 +12,53 @@ class ActivitiesScreen extends StatefulWidget {
 }
 
 class _ActivitiesScreenState extends State<ActivitiesScreen> {
-  late List<Activity> activitiesToRender = [];
+  // late List<Activity> activitiesToRender = [];
   // this data will come from the server
-  List actData = [
-    ['Coding', Color(0xFF1572A1), '', 'Others'],
-    ['Reading', Color(0xFFBB6464), '', 'Others'],
+  List<Activity> databaseSimulationData = [
+    Activity(
+      name: 'Coding',
+      color: Color(0xFF1572A1),
+      description: 'Coding my future',
+      category: 'Others',
+    ),
   ];
+
+  List<ActivityTileWidget> activitiesToRender = [];
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < databaseSimulationData.length; ++i) {
+      activitiesToRender.add(
+        ActivityTileWidget(
+          activity: Activity(
+            name: this.databaseSimulationData[i].name,
+            color: this.databaseSimulationData[i].color,
+            description: this.databaseSimulationData[i].description,
+            category: this.databaseSimulationData[i].category,
+          ),
+        ),
+      );
+    }
+    print(activitiesToRender);
+  }
 
   void _createNewActivity(BuildContext context) async {
     final Activity res = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => NewActivity()),
+      MaterialPageRoute(builder: (context) => CreateActivityScreen()),
     );
     setState(() {
-      this.actData.add([
-        res.name,
-        res.color,
-        res.description,
-        res.category,
-      ]);
+      activitiesToRender.add(
+        ActivityTileWidget(
+          activity: Activity(
+            name: res.name,
+            color: res.color,
+            description: res.description,
+            category: res.category,
+          ),
+        )
+      );
     });
   }
 
@@ -38,19 +67,12 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
     SizeConfig().init(context);
     return Scaffold(
       appBar: buildAppBar(context, this),
-      body: Container(
-        child: ListView.builder(
-          padding: EdgeInsets.fromLTRB(12, 10, 12, 0),
-          itemCount: this.actData.length,
-          itemBuilder: (BuildContext context, i) {
-            return Activity(
-              name: this.actData[i][0],
-              color: this.actData[i][1],
-              description: this.actData[i][2],
-              category: this.actData[i][3],
-            );
-          },
-        ),
+      body: ListView.builder(
+        padding: EdgeInsets.fromLTRB(12, 10, 12, 0),
+        itemCount: this.activitiesToRender.length,
+        itemBuilder: (BuildContext context, i) {
+          return activitiesToRender[i];
+        },
       ),
     );
   }
@@ -81,9 +103,7 @@ class _ActivitiesScreenState extends State<ActivitiesScreen> {
   }
 
   void showModalBottomSheetUI(
-    BuildContext context,
-    _ActivitiesScreenState self
-  ) {
+      BuildContext context, _ActivitiesScreenState self) {
     showModalBottomSheet(
       context: context,
       builder: (context) {

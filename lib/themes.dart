@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:analyseur/static/colors.dart';
+import 'package:analyseur/colors.dart';
 
 ThemeData lightTheme(BuildContext context) {
   return ThemeData(
@@ -31,7 +31,7 @@ ThemeData darkTheme(BuildContext context) {
       color: kPrimaryDarkColor,
       elevation: 1,
       iconTheme: IconThemeData(color: kBodyTextColorDark),
-      textTheme: TextTheme(title: TextStyle(fontSize: 20)).apply(bodyColor: kBodyTextColorDark),
+      textTheme: TextTheme(headline6: TextStyle(fontSize: 20)).apply(bodyColor: kBodyTextColorDark),
     ),
     textTheme: TextTheme(bodyText1: TextStyle(), bodyText2: TextStyle()).apply(
       bodyColor: kBodyTextColorDark,

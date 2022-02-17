@@ -1,5 +1,5 @@
-import 'package:analyseur/classes/activity.dart';
-import 'package:analyseur/helpers/sizes.dart';
+import 'package:analyseur/models/activity_model.dart';
+import 'package:analyseur/sizes.dart';
 import 'package:flutter/material.dart';
 
 class ActivityInformation extends StatefulWidget {
@@ -14,9 +14,8 @@ class _ActivityInformationState extends State<ActivityInformation> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+      padding: EdgeInsets.all(16),
       width: double.infinity,
-      height: getProportionateScreenHeight(200),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,13 +48,10 @@ class _ActivityInformationState extends State<ActivityInformation> {
               ),
             ],
           ),
-          Text(
-            widget.act.description.isEmpty
-                ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-                : widget.act.description,
-            style: TextStyle(
-              height: 1.5,
-            ),
+          Container(
+            width: double.infinity,
+            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: Text(widget.act.description),
           ),
         ],
       ),

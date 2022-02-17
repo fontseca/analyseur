@@ -1,11 +1,11 @@
-import 'package:analyseur/classes/record.dart';
-import 'package:analyseur/screens/activities/record-logs.dart';
+import 'package:analyseur/models/record_model.dart';
+import 'package:analyseur/views/activity/record_logs.dart';
 import 'package:flutter/material.dart';
 
-class RecordItem extends StatelessWidget {
+class RecordTileWidget extends StatelessWidget {
   final Record record;
 
-  RecordItem(this.record);
+  RecordTileWidget(this.record);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class RecordItem extends StatelessWidget {
       dense: true,
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return RecordLogs(this.record.recordLogs, 'Test');
+          return RecordLogsScreen(this.record.recordLogs, 'Test');
         }));
       },
     );

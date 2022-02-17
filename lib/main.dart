@@ -1,6 +1,6 @@
-import 'package:analyseur/helpers/themes.dart';
+import 'package:analyseur/themes.dart';
+import 'package:analyseur/views/home.dart';
 import 'package:flutter/material.dart';
-import 'package:analyseur/screens/activities/activities.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme(context),
       darkTheme: darkTheme(context),
       themeMode: ThemeMode.light,
-      home: ActivitiesScreen(),
+      home: HomeScreen(),
     );
   }
 }

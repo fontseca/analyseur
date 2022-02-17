@@ -1,6 +1,5 @@
-import 'package:analyseur/classes/activity.dart';
-import 'package:analyseur/classes/week-record-point.dart';
-import 'package:analyseur/helpers/sizes.dart';
+import 'package:analyseur/models/activity_model.dart';
+import 'package:analyseur/models/week_record_model.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart'; // For DateFormat
@@ -18,13 +17,13 @@ class _ActivityChartState extends State<ActivityChart> {
   @override
   Widget build(BuildContext context) {
     final List<WeekRecordPoint> weekData = [
-      // WeekRecordPoint(DateTime(2022, 2, 9), 1),
-      // WeekRecordPoint(DateTime(2022, 2, 10), 2),
-      // WeekRecordPoint(DateTime(2022, 2, 11), 3),
-      // WeekRecordPoint(DateTime(2022, 2, 12), 5),
-      // WeekRecordPoint(DateTime(2022, 2, 13), 2),
-      // WeekRecordPoint(DateTime(2022, 2, 14), 3.5),
-      // WeekRecordPoint(DateTime(2022, 2, 15), 12.344),
+      WeekRecordPoint(DateTime(2022, 2, 9), 1),
+      WeekRecordPoint(DateTime(2022, 2, 10), 2),
+      WeekRecordPoint(DateTime(2022, 2, 11), 3),
+      WeekRecordPoint(DateTime(2022, 2, 12), 5),
+      WeekRecordPoint(DateTime(2022, 2, 13), 2),
+      WeekRecordPoint(DateTime(2022, 2, 14), 3.5),
+      WeekRecordPoint(DateTime(2022, 2, 15), 12.344),
     ];
 
     @override
