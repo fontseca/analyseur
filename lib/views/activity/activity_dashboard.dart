@@ -4,16 +4,16 @@ import 'package:analyseur/views/activity/activity_chart.dart';
 import 'package:flutter/material.dart';
 import 'activity_information.dart';
 
-class ActivityDashboard extends StatefulWidget {
+class ActivityDashboardScreen extends StatefulWidget {
   final Activity act;
 
-  ActivityDashboard(this.act);
+  ActivityDashboardScreen(this.act);
 
   @override
-  State<ActivityDashboard> createState() => _ActivityDashboardState();
+  State<ActivityDashboardScreen> createState() => _ActivityDashboardScreenState();
 }
 
-class _ActivityDashboardState extends State<ActivityDashboard> {
+class _ActivityDashboardScreenState extends State<ActivityDashboardScreen> {
   List<RecordTileWidget> recordsList = [];
 
   @override
